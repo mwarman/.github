@@ -1,0 +1,27 @@
+name: Sonarube Scan
+
+on:
+  workflow_call:
+    secrets:
+      SONAR_HOST_URL:
+        description: 'The Sonarqube server URL.'
+        required: true
+      SONAR_TOKEN:
+        description: 'The Sonarqube access token.'
+        required: true
+
+jobs:
+  scan:
+    name: 'Sonarqube Scan'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+      - name: SonarQube Scan
+        run: |
+          echo "Scanning with host ${{ secrets.SONAR_HOST_URL }} and token ${{ secrets.SONAR_TOKEN }}."
