@@ -55,3 +55,9 @@ jobs:
         run: |
           echo "${{ env.ENV_FILE }}" > .env
       - run: npm run test
+
+  scan:
+    uses: mwarman/.github/workflows/sonarqube-scan.yml@04f196297e9d0c6a74f377d3443394e375ee7c15
+    secrets:
+      SONAR_HOST: 'https://mwarman.sonarqube.com'
+      SONAR_TOKEN: 'hello-i-am-a-token'
