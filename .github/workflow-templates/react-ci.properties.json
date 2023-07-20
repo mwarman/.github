@@ -1,0 +1,7 @@
+{
+  "name": "React CI",
+  "description": "React CI starter workflow.",
+  "iconName": "react-icon",
+  "categories": ["React", "JavaScript", "npm", "continuous-integration"],
+  "filePatterns": ["package.json$"]
+}
