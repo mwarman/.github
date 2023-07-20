@@ -1,18 +1,18 @@
-name: Sonarube Scan
+name: SonarQube Scan
 
 on:
   workflow_call:
     secrets:
       SONAR_HOST_URL:
-        description: 'The Sonarqube server URL.'
+        description: 'The SonarQube server URL.'
         required: true
       SONAR_TOKEN:
-        description: 'The Sonarqube access token.'
+        description: 'The SonarQube access token.'
         required: true
 
 jobs:
   scan:
-    name: 'Sonarqube Scan'
+    name: 'Scan'
 
     runs-on: ubuntu-latest
     timeout-minutes: 5
