@@ -9,12 +9,24 @@
 # 2. .nvmrc File
 #    Ensure that you have a .nvmrc file in the base repo directory.
 #    See: https://github.com/nvm-sh/nvm
+#
+# 3. Triggers -
+#    Review the 'on' section below which contains the GitHub events which trigger
+#    workflow execution. Update the triggers to conform to your repository branching
+#    strategy and code review process.
+#    See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
 
 name: React CI
 
 on:
+  push:
+    branches:
+      - feature/**
+      - release/**
+      - hotfix/**
   pull_request:
-    branches: [$default-branch]
+    branches:
+      - $default-branch
 
 env:
   ENV_FILE: ENV_CI # set this to your .env file contents
