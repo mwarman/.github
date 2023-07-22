@@ -23,7 +23,7 @@ on:
         required: true
 
 jobs:
-  scan:
+  greet:
     name: 'Greet'
 
     runs-on: ubuntu-latest
