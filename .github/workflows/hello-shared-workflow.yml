@@ -1,0 +1,41 @@
+# This is a hello world style GitHub shared workflow.
+# See: https://docs.github.com/en/actions/using-workflows/reusing-workflows
+#
+# A shared workflow is a reusable, called workflow and may be shared a the
+# Repository, Organization, or Enterprise level.
+#
+# A shared workflow is called by another workflow and accepts plain text
+# inputs and encrypted secrets.
+
+name: Send Greeting
+
+on:
+  workflow_call:
+    inputs:
+      GREETING:
+        type: string
+        default: Hello
+        description: The greeting text
+        required: false
+      AUDIENCE:
+        type: string
+        default: World
+        description: The audience to be greeted
+        required: false
+    secrets:
+      DO_NOT_TELL:
+        description: 'An encrypted value'
+        required: true
+
+jobs:
+  scan:
+    name: 'Greet'
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Speak
+        run: echo "${{ inputs.GREETING }} ${{ inputs.AUDIENCE }}!"
+      - name: Whisper
+        run: echo "Do not tell anyone. ${{ secrets.DO_NOT_TELL }}"
