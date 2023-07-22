@@ -28,6 +28,8 @@ on:
       - feature/**
       - release/**
       - hotfix/**
+    tags:
+      - ci
   pull_request:
     branches:
       - $default-branch
@@ -44,7 +46,6 @@ on:
 env:
   GREETING: Hi # set this to your greeting
   AUDIENCE: workflow creators # set this to your greeting audience
-  A_SECRET: secret_value # set this to a secret value, e.g. ${{ secrets.VAR_NAME }}
 
 jobs:
   # The 'build' job contains steps which simulate creating a build artifact: 'greeting.txt'
@@ -56,10 +57,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
+    # map step outputs to job output variables
+    outputs:
+      greeting: ${{ steps.create.outputs.greeting }}
+
     steps:
+      # write greeting to step output variable
       - name: 'Create greeting'
+        id: create
         run: |
-          echo "${{ env.GREETING }} ${{ env.AUDIENCE }}" > greeting.txt
+          echo "greeting=$GREETING $AUDIENCE!" >> "$GITHUB_OUTPUT"
+      - name: 'Package greeting'
+        run: |
+          echo "${{ steps.create.outputs.greeting }}" > greeting.txt
       - name: 'List files'
         run: ls -R
       - name: 'Upload greeting artifact'
@@ -94,12 +104,14 @@ jobs:
   # Call a shared workflow to perform one or more jobs
   # Shared workflows encapsulate reusable elements of workflows
   # Shared workflows may be created at the repository, organization, or enterprise level
+  # Shared workflows may be passed inputs from GitHub contexts or outputs
+  # from previous jobs, but not the 'env' variables.
   shared:
     name: 'Call Shared'
+    needs: build
 
     uses: mwarman/.github/.github/workflows/hello-shared-workflow.yml@main
     with:
-      GREETING: ${{ env.GREETING }}
-      AUDIENCE: ${{ env.AUDIENCE }}
+      greeting: ${{ needs.build.outputs.greeting }}
     secrets:
-      DO_NOT_TELL: ${{ env.A_SECRET }}
+      do-not-tell: ${{ secrets.A_SECRET }}

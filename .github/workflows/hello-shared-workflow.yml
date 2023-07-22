@@ -12,19 +12,14 @@ name: Send Greeting
 on:
   workflow_call:
     inputs:
-      GREETING:
+      greeting:
         type: string
-        default: Hello
+        default: Hello world!
         description: The greeting text
         required: false
-      AUDIENCE:
-        type: string
-        default: World
-        description: The audience to be greeted
-        required: false
     secrets:
-      DO_NOT_TELL:
-        description: 'An encrypted value'
+      do-not-tell:
+        description: 'An secret value'
         required: true
 
 jobs:
@@ -35,7 +30,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Speak
-        run: echo "${{ inputs.GREETING }} ${{ inputs.AUDIENCE }}!"
-      - name: Whisper
-        run: echo "Do not tell anyone. ${{ secrets.DO_NOT_TELL }}"
+      - name: Speak Greeting
+        run: echo "${{ inputs.greeting }}"
+      - name: Whisper Secret
+        run: echo "${{ secrets.do-not-tell }}"
