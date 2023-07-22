@@ -8,7 +8,7 @@
 #
 # To use this workflow, perform the following set-up steps:
 #
-# 1. Environment Variables -
+# 1. Environment -
 #    Set up the environment variables to obtain values from repo or organization variables or secrets.
 #    For example, ${{ vars.MY_REPO_VAR }} or ${{ secrets.MY_ORG_SECRET }}
 #
@@ -17,6 +17,10 @@
 #    workflow execution. Update the triggers to conform to your repository branching
 #    strategy and code review process.
 #    See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+#
+# 3. Variables -
+#    Scan the workflow for any other 'vars' or 'secrets' which may need to be
+#    sourced from your repository, environment, or organization.
 
 name: Hello Starter Workflow
 
@@ -101,9 +105,9 @@ jobs:
       - name: 'Display greeting'
         run: cat greeting.txt
 
-  # Call a shared workflow to perform one or more jobs
-  # Shared workflows encapsulate reusable elements of workflows
-  # Shared workflows may be created at the repository, organization, or enterprise level
+  # Call a shared workflow to perform one or more jobs.
+  # Shared workflows encapsulate reusable elements of workflows.
+  # Shared workflows may be created at the repository, organization, or enterprise level.
   # Shared workflows may be passed inputs from GitHub contexts or outputs
   # from previous jobs, but not the 'env' variables.
   shared:
