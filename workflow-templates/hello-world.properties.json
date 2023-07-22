@@ -1,6 +1,6 @@
 {
   "name": "Hello Starter Workflow",
   "description": "A hello world style GitHub Starter workflow.",
-  "iconName": "workflow",
+  "iconName": "octicon workflow",
   "categories": ["continuous-integration"]
 }
